@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <style>
+        .btn-voltar {
+            background-color: #95a5a6;
+            color: white;
+            padding: 0.6em 1.2em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1em;
+        }
+        .btn-voltar:hover {
+            background-color: #7f8c8d;
+        }
+        .form-row {
+            display: flex;
+            gap: 1em;
+            margin-bottom: 1em;
+        }
+        .form-row > div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Editar Produto</h1>
+            <div class="nav-links">
+                <a href="{{url_for('cadastro_produto')}}">Voltar para Produtos</a>
+                <a href="{{url_for('estoque')}}">Ver Estoque</a>
+                <a href="{{url_for('logout')}}">Sair</a>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2>Editando: {{produto.nome}}</h2>
+            <form action="{{url_for('editar_produto', produto_id=produto.id)}}" method="post">
+                <label for="nome">Nome do Produto:</label>
+                <input type="text" id="nome" name="nome" value="{{produto.nome}}" required>
+
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" required>{{produto.descricao}}</textarea>
+
+                <div class="form-row">
+                    <div>
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="number" id="quantidade" name="quantidade" value="{{produto.quantidade}}" required>
+                    </div>
+                    <div>
+                        <label for="preco">Preço:</label>
+                        <input type="number" id="preco" name="preco" step="0.01" value="{{produto.preco}}" required>
+                    </div>
+                </div>
+
+                <label for="quantidade_minima">Quantidade Mínima para Alerta:</label>
+                <input type="number" id="quantidade_minima" name="quantidade_minima" value="{{produto.quantidade_minima}}" min="1" required>
+
+                <button type="submit">Salvar Alterações</button>
+                <a href="{{url_for('cadastro_produto')}}" class="btn-voltar">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

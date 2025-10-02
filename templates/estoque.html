@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Estoque</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 2em;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 1.5em 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* Inputs e textareas */
+        input, textarea {
+            width: 100%;
+            padding: 0.6em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #3498db;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 0.6em 1.2em;
+            margin-bottom: 1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #1d6fa5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 0.8em;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #eef6fb;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .estoque-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+        }
+
+        .estoque-header h2 {
+            font-size: 22px;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .estoque-header .actions a {
+            background: #3498db;
+            color: #fff;
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            margin-left: 0.5em;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .estoque-header .actions a:hover {
+            background: #1d6fa5;
+        }
+
+        .status-entrada {
+            color: #27ae60; 
+            font-weight: bold;
+        }
+
+        .status-saida {
+            color: #e74c3c; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="estoque-header">
+            <h2>Movimentação de Estoque</h2>
+            <div class="actions">
+                <a href="{{ url_for('cadastro_produto') }}">Cadastrar Produto</a>
+                <a href="{{ url_for('logout') }}">Sair</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Tipo</th>
+                    <th>Quantidade</th>
+                    <th>Data</th>
+                    <th>Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mov in movimentacoes %}
+                <tr>
+                    <td>{{ mov.produto_nome }}</td>
+                    <td class="status-{{ mov.tipo_movimentacao }}">{{ mov.tipo_movimentacao }}</td>
+                    <td>{{ mov.quantidade }}</td>
+                    <td>{{ mov.data_movimentacao }}</td>
+                    <td>{{ mov.usuario_nome }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5">Nenhuma movimentação registrada</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
